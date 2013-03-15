@@ -8,17 +8,14 @@ val testData: List[String] = f.getLines
                               .filter(_._2 % 2 == 1)
                               .map(_._1)
 
-var i = 0
-
 testData.zipWithIndex.foreach {
   case (data, i) => {
-    println(s"Case #${i + 1}: ${calc(data)}")
+    println(s"Case #${i + 1}: ${calcOneline(data.split(" ").map(_.toInt))}")
   }
 }
 
 
-def calc(data: String) = {
-  val houses = data.split(" ").map(_.toInt)
+def calc(houses: Array[Int]) = {
   var memo = new Array[Int](1001)
 
   houses.foreach(h => {
@@ -26,5 +23,9 @@ def calc(data: String) = {
   })
 
   houses.size - memo.max
+}
+
+def calcOneline(houses: Array[Int]) = {
+  houses.size - (houses.foldLeft(new Array[Int](1001)) {(z, n) => z.updated(n, z.take(n).max + 1)}).max
 }
 
