@@ -23,8 +23,8 @@ def toInch(s: String): Int = {
 }
 
 def toFeetInch(inch: Double, alg: Double => Double): String = {
-  // https://issues.scala-lang.org/browse/SI-6476 これはない・・・
-  s"${(inch / 12).toInt}'${alg(inch % 12).toInt}" + "\""
+  // https://issues.scala-lang.org/browse/SI-6476
+  s"""${(inch / 12).toInt}'${alg(inch % 12).toInt}\""""
 }
 
 def calc(data: String) = {
