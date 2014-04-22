@@ -12,30 +12,29 @@ val sc = new Scanner(new File("large.in"))
 
 
 def deceitful(ken: Seq[Double], naomi: Seq[Double]): Int = {
-  var result = 0
-  var kenRemain = ken
-  naomi foreach {n =>
-    if (kenRemain.head < n) {
-      result += 1
-      kenRemain = kenRemain.tail
-    } else {
-      kenRemain = kenRemain.init
+  var kenRemain = ken.toBuffer
+  naomi count {n =>
+    kenRemain indexWhere {_ < n} match {
+      case -1 =>
+        kenRemain.trimEnd(1)
+        false
+      case i =>
+        kenRemain.remove(0)
+        true
     }
   }
-  return result
 }
 
 def honest(ken: Seq[Double], naomi: Seq[Double]): Int = {
-  var result = 0
-  var kenRemain = ken
-  naomi foreach {n =>
-    val (low, high) = kenRemain partition {k => k < n}
-    if (high.isEmpty) {
-      result += 1
-      kenRemain = low.tail
-    } else {
-      kenRemain = low ++ high.tail
+  var kenRemain = ken.toBuffer
+  naomi count {n =>
+    kenRemain indexWhere {_ > n} match {
+      case -1 =>
+        kenRemain.remove(0)
+        true
+      case i =>
+        kenRemain.remove(i)
+        false
     }
   }
-  return result
 }
