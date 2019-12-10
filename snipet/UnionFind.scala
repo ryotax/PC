@@ -20,7 +20,7 @@ class UnionFind(size: Int) {
   def union(x: Int, y: Int): Unit = {
     val (xRoot, xRank) = find(x)
     val (yRoot, yRank) = find(y)
-    val newRoot = if (xRank > yRank) yRoot else xRoot
+    val newRoot = if (xRank < yRank) yRoot else xRoot
     if (xRoot != yRoot) {
       parents(xRoot) = newRoot
       parents(yRoot) = newRoot
